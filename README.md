@@ -98,7 +98,20 @@ The web UI respects the original SOF-ELK paths and CLI tools:
   - `aws-vpcflow2sof-elk.sh`
   - `azure-vpcflow2sof-elk.py`
 
-## Permissions & Security Notes
+## Note 
+
+## The following are not working for now , and I will be fixing them later 
+NetFlow Processing
+Command-line activity: nfdump2sof-elk.sh -r /path/to/netflow/ -w /logstash/nfarch/output.txt
+Web interface action: Form to upload NetFlow files and specify parameters
+AWS VPC Flow Processing
+Command-line activity: aws-vpcflow2sof-elk.sh -r /path/to/aws-vpcflow/ -w /logstash/nfarch/output.txt
+Web interface action: Form to upload AWS VPC Flow files and specify parameters
+Azure VPC Flow Processing
+Command-line activity: azure-vpcflow2sof-elk.py -r /path/to/gcp-vpcflow/ -w /logstash/nfarch/output.txt
+Web interface action: Form to upload Azure VPC Flow files and specify parameters
+
+## Permissions 
 
 - The Django app runs with the same privileges as the user starting the server (e.g., `elk_user`).
 - **File Uploads & Deletion:** That user must have write permissions to relevant `/logstash/*` subdirectories.

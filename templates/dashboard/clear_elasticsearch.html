@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Clear Elasticsearch Indices</h2>
+    
+    <div class="warning-box">
+        <h3>Warning!</h3>
+        <p>This action will permanently delete data from the Elasticsearch database. This operation cannot be undone.</p>
+    </div>
+    
+    <form method="post" data-confirm="Are you sure you want to clear these indices? This action cannot be undone.">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_index_name">Select indices to clear:</label>
+            {{ form.index_name }}
+            {% if form.index_name.errors %}
+            <div class="error">{{ form.index_name.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_confirm" class="checkbox-label">
+                {{ form.confirm }}
+                I understand this action cannot be undone
+            </label>
+            {% if form.confirm.errors %}
+            <div class="error">{{ form.confirm.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-actions">
+            <a href="{% url 'dashboard' %}" class="btn btn-cancel">Cancel</a>
+            <button type="submit" class="btn btn-submit">Clear Indices</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

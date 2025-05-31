@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h2>SOF-ELK Dashboard</h2>
+    
+    <div class="status-cards">
+        <div class="card">
+            <h3>System Status</h3>
+            <div class="status-indicators">
+                <div class="status-item">
+                    <span class="label">Elasticsearch:</span>
+                    <span class="status {{ system_status.elasticsearch_status }}">{{ system_status.elasticsearch_status }}</span>
+                </div>
+                <div class="status-item">
+                    <span class="label">Logstash:</span>
+                    <span class="status {{ system_status.logstash_status }}">{{ system_status.logstash_status }}</span>
+                </div>
+                <div class="status-item">
+                    <span class="label">Kibana:</span>
+                    <span class="status {{ system_status.kibana_status }}">{{ system_status.kibana_status }}</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'system_status' %}" class="btn">View Details</a>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3>Quick Actions</h3>
+            <div class="action-buttons">
+                <a href="{% url 'upload_log' %}" class="btn">Upload Logs</a>
+                <a href="{% url 'process_netflow' %}" class="btn">Process NetFlow</a>
+                <a href="{% url 'clear_elasticsearch' %}" class="btn">Clear Indices</a>
+                <a href="{% url 'update_sof_elk' %}" class="btn">Update SOF-ELK</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="data-tables">
+        <div class="table-container">
+            <h3>Recent Log Uploads</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Log Type</th>
+                        <th>Upload Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in recent_logs %}
+                    <tr>
+                        <td>{{ log.original_name }}</td>
+                        <td>{{ log.get_log_type_display }}</td>
+                        <td>{{ log.upload_date }}</td>
+                        <td class="status {{ log.status }}">{{ log.status }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">No recent log uploads</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="table-container">
+            <h3>Recent Commands</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Command</th>
+                        <th>Executed At</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for command in recent_commands %}
+                    <tr>
+                        <td>{{ command.get_command_type_display }}</td>
+                        <td>{{ command.executed_at }}</td>
+                        <td class="status {{ command.status }}">{{ command.status }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">No recent commands</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Auto-refresh system status every 30 seconds
+    setInterval(function() {
+        fetch('{% url "api_system_status" %}')
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector('.status-indicators .status-item:nth-child(1) .status').textContent = data.elasticsearch;
+                document.querySelector('.status-indicators .status-item:nth-child(1) .status').className = 'status ' + data.elasticsearch;
+                
+                document.querySelector('.status-indicators .status-item:nth-child(2) .status').textContent = data.logstash;
+                document.querySelector('.status-indicators .status-item:nth-child(2) .status').className = 'status ' + data.logstash;
+                
+                document.querySelector('.status-indicators .status-item:nth-child(3) .status').textContent = data.kibana;
+                document.querySelector('.status-indicators .status-item:nth-child(3) .status').className = 'status ' + data.kibana;
+            });
+    }, 30000);
+</script>
+{% endblock %}

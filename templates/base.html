@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOF-ELK Web Interface</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="logo">
+                <h1>SOF-ELK Web Interface</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'dashboard' %}" class="{% if request.path == '/' %}active{% endif %}">Dashboard</a></li>
+                    <li><a href="{% url 'upload_log' %}" class="{% if 'upload-log' in request.path %}active{% endif %}">Upload Logs</a></li>
+                    <li><a href="{% url 'list_logs' %}" class="{% if 'list-logs' in request.path %}active{% endif %}">Manage Logs</a></li> {# Added Manage Logs link #}
+                    <li><a href="{% url 'process_netflow' %}" class="{% if 'process-netflow' in request.path %}active{% endif %}">Process NetFlow</a></li>
+                    <li><a href="{% url 'clear_elasticsearch' %}" class="{% if 'clear-elasticsearch' in request.path %}active{% endif %}">Clear Indices</a></li>
+                    <li><a href="{% url 'update_sof_elk' %}" class="{% if 'update-sof-elk' in request.path %}active{% endif %}">Update SOF-ELK</a></li>
+                    <li><a href="{% url 'system_status' %}" class="{% if 'system-status' in request.path %}active{% endif %}">System Status</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            {% block content %}{% endblock %}
+        </main>
+        
+        <footer>
+            <p>SOF-ELK Web Interface &copy; {% now "Y" %}</p>
+        </footer>
+    </div>
+    
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

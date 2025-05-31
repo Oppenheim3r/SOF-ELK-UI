@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="list-container">
+    <h2>Manage Uploaded Log Files</h2>
+
+    {% if log_files %}
+    <form method="post" id="delete-log-form" data-confirm="Are you sure you want to delete the selected log files? This action cannot be undone.">
+        {% csrf_token %}
+        <div class="table-actions">
+            <button type="submit" class="btn btn-danger">Delete Selected</button>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="select-all-logs"></th>
+                        <th>Original Name</th>
+                        <th>Log Type</th>
+                        <th>Upload Date</th>
+                        <th>Size</th>
+                        <th>Status</th>
+                        <th>Stored Path</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in log_files %}
+                    <tr>
+                        <td><input type="checkbox" name="file_ids" value="{{ log.id }}" class="log-checkbox"></td>
+                        <td>{{ log.original_name }}</td>
+                        <td>{{ log.get_log_type_display }}</td>
+                        <td>{{ log.upload_date|naturaltime }}</td>
+                        <td>{{ log.size|filesizeformat }}</td>
+                        <td class="status {{ log.status }}">{{ log.status }}</td>
+                        <td>{{ log.get_full_path }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </form>
+    {% else %}
+    <p>No log files have been uploaded yet.</p>
+    <a href="{% url 'upload_log' %}" class="btn">Upload First Log File</a>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const selectAllCheckbox = document.getElementById('select-all-logs');
+    const logCheckboxes = document.querySelectorAll('.log-checkbox');
+    const deleteForm = document.getElementById('delete-log-form');
+
+    if (selectAllCheckbox) {
+        selectAllCheckbox.addEventListener('change', function() {
+            logCheckboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+    }
+
+    if (deleteForm) {
+        deleteForm.addEventListener('submit', function(e) {
+            const selectedCheckboxes = document.querySelectorAll('.log-checkbox:checked');
+            if (selectedCheckboxes.length === 0) {
+                alert('Please select at least one file to delete.');
+                e.preventDefault();
+                return;
+            }
+            
+            const confirmMessage = this.getAttribute('data-confirm');
+            if (!confirm(confirmMessage)) {
+                e.preventDefault();
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

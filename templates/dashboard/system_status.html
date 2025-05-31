@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="system-status-container">
+    <h2>System Status</h2>
+    
+    <div class="status-card">
+        <h3>Services Status</h3>
+        <div class="status-grid">
+            <div class="status-item">
+                <span class="label">Elasticsearch:</span>
+                <span class="status {{ system_status.elasticsearch_status }}">{{ system_status.elasticsearch_status }}</span>
+            </div>
+            <div class="status-item">
+                <span class="label">Logstash:</span>
+                <span class="status {{ system_status.logstash_status }}">{{ system_status.logstash_status }}</span>
+            </div>
+            <div class="status-item">
+                <span class="label">Kibana:</span>
+                <span class="status {{ system_status.kibana_status }}">{{ system_status.kibana_status }}</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="status-card">
+        <h3>Disk Usage</h3>
+        <pre class="disk-usage">{{ system_status.disk_usage.raw }}</pre>
+    </div>
+    
+    <div class="status-card">
+        <h3>Elasticsearch Indices</h3>
+        <p>Total indices: {{ system_status.indices_count }}</p>
+    </div>
+    
+    <div class="status-card">
+        <h3>Last Updated</h3>
+        <p>{{ system_status.timestamp }}</p>
+        <div class="card-footer">
+            <form method="get" action="{% url 'system_status' %}">
+                <button type="submit" class="btn">Refresh Status</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

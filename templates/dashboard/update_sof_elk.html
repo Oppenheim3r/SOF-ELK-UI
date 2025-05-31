@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Update SOF-ELK Configuration</h2>
+    
+    <div class="info-box">
+        <h3>Information</h3>
+        <p>This action will update the SOF-ELK configuration files from the Github repository. This operation requires sudo privileges.</p>
+    </div>
+    
+    <form method="post" data-confirm="Are you sure you want to update SOF-ELK configuration?">
+        {% csrf_token %}
+        
+        <div class="form-actions">
+            <a href="{% url 'dashboard' %}" class="btn btn-cancel">Cancel</a>
+            <button type="submit" class="btn btn-submit">Update SOF-ELK</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

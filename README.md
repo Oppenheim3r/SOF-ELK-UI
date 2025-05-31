@@ -1,7 +1,7 @@
 
 # SOF-ELK Web Interface
 
-This project is meant to be an add-on to the amazing SOF-ELK VM created by [@philhagen](https://github.com/philhagen/sof-elk/wiki/Virtual-Machine-README) — not a standalone tool. I built this Django based web interface specifically to be cloned and run inside the SOF-ELK VM itself. The idea is simple: give users a graphical UI to help upload, manage, and process log files without needing to mess with the command line every time.
+This project is meant to be an add on to the amazing SOF-ELK VM created by [@philhagen](https://github.com/philhagen/sof-elk/wiki/Virtual-Machine-README)  not a standalone tool. I built this Django based web interface specifically to be cloned and run inside the SOF-ELK VM itself. The idea is simple: give users a graphical UI to help upload, manage, and process log files without needing to mess with the command line every time.
 
 I struggled a lot with uploading and managing files on SOF-ELK over SSH. It was clunky, especially when dealing with large log sets or constantly switching file types. So I built this to make my life easier and figured others might find it helpful too, which is why I’m sharing it with the community.
 And yes, I used AI to help put this together.
@@ -105,6 +105,5 @@ The web UI respects the original SOF-ELK paths and CLI tools:
 - **File Uploads & Deletion:** That user must have write permissions to relevant `/logstash/*` subdirectories.
 - **Log Processing (NetFlow, etc.):** Requires write access to `/logstash/nfarch/`.
 - **Privileged Commands:** For stuff like `sof-elk_update.sh`, make sure the Django server user has **passwordless sudo** access specifically for that command.
-- For production, use a proper web server like Nginx or Apache with WSGI and lock down permissions carefully.
 
 

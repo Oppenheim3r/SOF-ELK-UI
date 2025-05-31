@@ -66,7 +66,4 @@ This document maps SOF-ELK command-line activities to web interface actions.
   - `aws-vpcflow2sof-elk.sh`
   - `azure-vpcflow2sof-elk.py`
 
-## User Credentials
-- Username: `elk_user`
-- Password: `forensics`
-- Sudo access: Yes
+

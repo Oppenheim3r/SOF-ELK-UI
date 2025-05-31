@@ -101,13 +101,13 @@ The web UI respects the original SOF-ELK paths and CLI tools:
 ## Note 
 
 ## The following are not working for now , and I will be fixing them later 
-NetFlow Processing
+#NetFlow Processing
 Command-line activity: nfdump2sof-elk.sh -r /path/to/netflow/ -w /logstash/nfarch/output.txt
 Web interface action: Form to upload NetFlow files and specify parameters
-AWS VPC Flow Processing
+#AWS VPC Flow Processing
 Command-line activity: aws-vpcflow2sof-elk.sh -r /path/to/aws-vpcflow/ -w /logstash/nfarch/output.txt
 Web interface action: Form to upload AWS VPC Flow files and specify parameters
-Azure VPC Flow Processing
+#Azure VPC Flow Processing
 Command-line activity: azure-vpcflow2sof-elk.py -r /path/to/gcp-vpcflow/ -w /logstash/nfarch/output.txt
 Web interface action: Form to upload Azure VPC Flow files and specify parameters
 

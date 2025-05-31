@@ -18,37 +18,36 @@ And yes, I used AI to help put this together.
 
 ## 🛠 How to Install
 
-1. Clone this repo inside your SOF-ELK VM.
-2. Set up a Python virtual environment:
+## Make sure you are running on root while doing all of this 
 
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
+1. Clone this repo inside your SOF-ELK VM.
+    ```bash
+git clone https://github.com/Oppenheim3r/SOF-ELK-UI.git
    ```
 
 3. Install the required dependencies:
 
    ```bash
-   pip install django
+   pip3 install django
    ```
 
 4. Run the migrations:
 
    ```bash
-   python manage.py makemigrations
-   python manage.py migrate
+   python3 manage.py makemigrations
+   python3 manage.py migrate
    ```
 
 5. (Optional) Create an admin user:
 
    ```bash
-   python manage.py createsuperuser
+   python3 manage.py createsuperuser
    ```
 
 6. Start the development server:
 
    ```bash
-   python manage.py runserver 0.0.0.0:8000
+   python3 manage.py runserver 0.0.0.0:8000
    ```
 
 7. Access the web interface via your browser at:  

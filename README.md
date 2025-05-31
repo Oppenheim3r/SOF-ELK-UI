@@ -21,9 +21,9 @@ And yes, I used AI to help put this together.
 ## Make sure you are running on root while doing all of this 
 
 1. Clone this repo inside your SOF-ELK VM.
-    ```bash
-git clone https://github.com/Oppenheim3r/SOF-ELK-UI.git
-   ```
+    
+``` git clone https://github.com/Oppenheim3r/SOF-ELK-UI.git```
+   
 
 3. Install the required dependencies:
 
@@ -31,26 +31,26 @@ git clone https://github.com/Oppenheim3r/SOF-ELK-UI.git
    pip3 install django
    ```
 
-4. Run the migrations:
+3. Run the migrations:
 
    ```bash
    python3 manage.py makemigrations
    python3 manage.py migrate
    ```
 
-5. (Optional) Create an admin user:
+4. (Optional) Create an admin user:
 
    ```bash
    python3 manage.py createsuperuser
    ```
 
-6. Start the development server:
+5. Start the development server:
 
    ```bash
    python3 manage.py runserver 0.0.0.0:8000
    ```
 
-7. Access the web interface via your browser at:  
+6. Access the web interface via your browser at:  
    `http://<your-vm-ip>:8000`
 
 > **Note:** I personally ran into an issue accessing Django from my host machine — whether I used NAT or a custom bridged adapter, I just couldn’t reach it.  
